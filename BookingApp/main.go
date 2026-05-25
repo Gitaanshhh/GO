@@ -14,12 +14,12 @@ func main() {
 	fmt.Printf("Out of %v we have %d tickets availble!", conferenceTickets, remainingTickets)
 	fmt.Println("Get tickets here.")
 
-	var bookings = [50] string {"Gitaansh"}
+	var bookings = []string{"Gitaansh"}
 	// Or init as an empty arr -> var bookings [50] string
 
 	//Initializing var name
 	var userName string
-	var userTickets uint 				//Only positive
+	var userTickets uint //Only positive
 
 	fmt.Println("Enter Name : ")
 	fmt.Scan(&userName)
@@ -29,5 +29,9 @@ func main() {
 	remainingTickets -= int(userTickets)
 
 	fmt.Printf("Thank you %s for buying %d Tickets!\n", userName, userTickets)
-	fmt.Printf("%d Tickets remaining for %v.", remainingTickets, conferenceName)	
+	fmt.Printf("%d Tickets remaining for %v.\n", remainingTickets, conferenceName)
+	fmt.Printf("Bookings : \n")
+	for i := 0; i < len(bookings); i++ {
+		fmt.Printf("%v\n", bookings[i])
+	}
 }

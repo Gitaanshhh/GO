@@ -1,5 +1,22 @@
 # Go Notes
 
+This repository now keeps the long-form notes in a GitHub Pages-friendly `docs/` folder, with one markdown page per topic and a landing page for quick navigation.
+
+Use [docs/index.md](docs/index.md) as the entry point for the published site. The topic pages mirror the cheat-sheet structure from the attached reference and are grouped by concept so they are easy to browse, expand, and maintain.
+
+## Docs Map
+
+* [Basics](docs/basics.md)
+* [Arrays & Slices](docs/arrays-and-slices.md)
+* [Maps](docs/maps.md)
+* [Structs](docs/structs.md)
+* [Control Flow](docs/control-flow.md)
+* [Functions](docs/functions.md)
+* [Packages & Scope](docs/packages-and-scope.md)
+* [Concurrency](docs/concurrency.md)
+* [Errors](docs/errors.md)
+* [Hosting GitHub Pages](docs/hosting.md)
+
 ## Why Go?
 
 Go was designed for:
