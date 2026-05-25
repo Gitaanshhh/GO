@@ -41,5 +41,5 @@ for i, v := range s {
   _ = v
 }
 
-matrix := [][]int{{1, 2}, {3, 4}}
+matrix := [][]int{[]int{1, 2}, []int{3, 4}}
 ```
