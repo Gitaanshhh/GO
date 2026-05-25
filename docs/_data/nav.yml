@@ -1,0 +1,20 @@
+- title: Home
+  url: /
+- title: Basics
+  url: /basics.html
+- title: Arrays & Slices
+  url: /arrays-and-slices.html
+- title: Maps
+  url: /maps.html
+- title: Structs
+  url: /structs.html
+- title: Control Flow
+  url: /control-flow.html
+- title: Functions
+  url: /functions.html
+- title: Packages & Scope
+  url: /packages-and-scope.html
+- title: Concurrency
+  url: /concurrency.html
+- title: Errors
+  url: /errors.html

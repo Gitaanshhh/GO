@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title | default: site.title | default: "Go Notes" }}</title>
+    <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
+  </head>
+  <body>
+    <div class="site-shell">
+      <aside class="sidebar">
+        <div class="sidebar__brand">
+          <span class="sidebar__kicker">Go Notes</span>
+          <h1 class="sidebar__title">Documentation</h1>
+          <p class="sidebar__text">Go syntax, patterns, and examples for quick reference.</p>
+        </div>
+
+        <nav class="sidebar__nav" aria-label="Documentation navigation">
+          {% assign current_path = page.url | remove: site.baseurl | remove: 'index.html' | remove: '.html' %}
+          {% for item in site.data.nav %}
+            {% assign item_path = item.url | remove: '.html' %}
+            <a class="sidebar__link{% if current_path == item_path %} is-active{% endif %}" href="{{ item.url | relative_url }}">
+              {{ item.title }}
+            </a>
+          {% endfor %}
+        </nav>
+
+        <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
+          Toggle theme
+        </button>
+      </aside>
+
+      <main class="content">
+        <article class="page-card">
+          {{ content }}
+        </article>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        var storageKey = 'go-notes-theme';
+        var root = document.documentElement;
+        var saved = localStorage.getItem(storageKey);
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        function applyTheme(theme) {
+          root.setAttribute('data-theme', theme);
+          localStorage.setItem(storageKey, theme);
+        }
+
+        applyTheme(saved || (prefersDark ? 'dark' : 'dark'));
+
+        var toggle = document.querySelector('[data-theme-toggle]');
+        if (toggle) {
+          toggle.addEventListener('click', function () {
+            var current = root.getAttribute('data-theme') || 'dark';
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+          });
+        }
+      }());
+    </script>
+  </body>
+</html>
