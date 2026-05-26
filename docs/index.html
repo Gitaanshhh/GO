@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Go Notes</title>
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand__eyebrow">Go Notes</span>
+        </div>
+
+        <nav class="sidebar__nav" aria-label="Documentation navigation">
+          <a class="sidebar__link" href="#basics" data-nav-link="basics">Basics</a>
+          <a class="sidebar__link" href="#arrays" data-nav-link="arrays">Arrays and Slices</a>
+          <a class="sidebar__link" href="#maps" data-nav-link="maps">Maps</a>
+          <a class="sidebar__link" href="#control-flow" data-nav-link="control-flow">Control Flow</a>
+          <a class="sidebar__link" href="#functions" data-nav-link="functions">Functions</a>
+          <a class="sidebar__link" href="#structs" data-nav-link="structs">Structs</a>
+          <a class="sidebar__link" href="#packages" data-nav-link="packages">Packages and Scope</a>
+          <a class="sidebar__link" href="#concurrency" data-nav-link="concurrency">Concurrency</a>
+          <a class="sidebar__link" href="#errors" data-nav-link="errors">Errors</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <button class="theme-toggle theme-toggle--floating" type="button" aria-label="Toggle color theme" data-theme-toggle>
+          🌙
+        </button>
+
+        <header class="hero" id="top">
+          <h2 class="hero__title">Go fundamentals</h2>
+        </header>
+
+        <section class="topic-section" id="basics">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">1. Essentials</p>
+            <h3>Basics</h3>
+            <p>Variables, constants, zero values, and pointers are the foundation for the rest of the notes.</p>
+          </div>
+
+          <div class="content-grid two-up">
+            <article class="lesson-card">
+              <h4>Variables and constants</h4>
+              <pre><code>var x int = 5
+var y = 5
+z := 5
+
+var a, b int = 1, 2
+
+const Pi = 3.14
+
+const (
+  A = iota
+  B
+  C
+)</code></pre>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Types and zero values</h4>
+              <pre><code>var i int
+var f float64
+var b bool
+var s string
+var p *int</code></pre>
+            </article>
+
+            <article class="lesson-card lesson-card--wide">
+              <h4>Pointers</h4>
+              <pre><code>x := 42
+p := &amp;x
+*p = 100
+
+ps := &amp;Person{Name: "Ali"}
+ps.Name
+
+p2 := new(int)</code></pre>
+              <p>The short declaration form is common in functions, and unused variables must be removed before compilation.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section" id="arrays">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">2. Collections</p>
+            <h3>Arrays and Slices</h3>
+            <p>Arrays have fixed size; slices are flexible views over backing arrays.</p>
+          </div>
+
+          <div class="content-grid">
+            <article class="lesson-card">
+              <h4>Arrays</h4>
+              <pre><code>var a [3]int
+b := [3]int{1, 2, 3}
+c := [...]int{1, 2, 3}
+
+x := b
+x[0] = 99</code></pre>
+              <p>Assignments copy the full array value, so mutations on the copy do not affect the original.</p>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Slices and range</h4>
+              <pre><code>s := []int{1, 2, 3}
+s2 := make([]int, 5)
+s3 := make([]int, 3, 5)
+
+s = append(s, 4, 5)
+
+sub := s[1:4]
+dst := make([]int, len(s))
+copy(dst, s)
+
+for i, v := range s {
+  _ = i
+  _ = v
+}</code></pre>
+              <p>Sub-slices share storage unless you copy the data into a fresh slice.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section" id="maps">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">3. Lookup</p>
+            <h3>Maps</h3>
+            <p>Maps are the standard Go hash table and are ideal when the key matters more than ordering.</p>
+          </div>
+
+          <div class="content-grid">
+            <article class="lesson-card">
+              <h4>Map basics</h4>
+              <pre><code>m := map[string]int{"a": 1, "b": 2}
+m2 := make(map[string]int)
+
+m["key"] = 42
+val := m["key"]
+val, ok := m["key"]
+delete(m, "key")</code></pre>
+              <p>Use the two-value lookup when you need to tell the difference between a missing key and a zero value.</p>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Map of slices</h4>
+              <pre><code>graph := make(map[string][]string)
+graph["a"] = append(graph["a"], "b", "c")</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section" id="control-flow">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">4. Branching</p>
+            <h3>Control Flow</h3>
+            <p>Go keeps loops and branching small and explicit, which makes the flow easy to scan.</p>
+          </div>
+
+          <div class="content-grid">
+            <article class="lesson-card">
+              <h4>For loops</h4>
+              <pre><code>for i := 0; i &lt; 5; i++ {}
+
+for x &lt; 100 {
+  x *= 2
+}
+
+for {
+  break
+}</code></pre>
+            </article>
+
+            <article class="lesson-card">
+              <h4>If and switch</h4>
+              <pre><code>if err := doThing(); err != nil {
+  log.Fatal(err)
+}
+
+switch x {
+case 1:
+  fmt.Println("one")
+case 2, 3:
+  fmt.Println("two|three")
+default:
+}</code></pre>
+              <p>Use <code>fallthrough</code> explicitly when you want C-style switch behavior.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section" id="functions">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">5. Reuse</p>
+            <h3>Functions</h3>
+            <p>Function signatures, variadics, closures, and deferred cleanup are core Go patterns.</p>
+          </div>
+
+          <div class="content-grid">
+            <article class="lesson-card">
+              <h4>Signatures and returns</h4>
+              <pre><code>func add(a, b int) int { return a + b }
+
+func divide(a, b float64) (float64, error) {
+  if b == 0 { return 0, errors.New("div by zero") }
+  return a / b, nil
+}</code></pre>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Variadic functions and closures</h4>
+              <pre><code>func sum(nums ...int) int {
+  total := 0
+  for _, n := range nums {
+    total += n
+  }
+  return total
+}
+
+counter := func() func() int {
+  n := 0
+  return func() int {
+    n++
+    return n
+  }
+}</code></pre>
+            </article>
+
+            <article class="lesson-card lesson-card--wide">
+              <h4>Defer</h4>
+              <pre><code>defer f.Close()</code></pre>
+              <p><code>defer</code> is the standard cleanup mechanism and runs in last-in, first-out order.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section" id="structs">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">6. Data models</p>
+            <h3>Structs</h3>
+            <p>Structs, methods, embedding, and interfaces are how Go models behavior and composition.</p>
+          </div>
+
+          <div class="content-grid two-up">
+            <article class="lesson-card">
+              <h4>Structs and methods</h4>
+              <pre><code>type Person struct {
+  Name string
+  age  int
+}
+
+func (p Person) Greet() string {
+  return "Hi, " + p.Name
+}
+
+func (p *Person) Birthday() {
+  p.age++
+}</code></pre>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Embedding and interfaces</h4>
+              <pre><code>type Employee struct {
+  Person
+  Company string
+}
+
+e := Employee{
+  Person:  Person{Name: "Ali", age: 25},
+  Company: "Cisco",
+}
+
+type Greeter interface {
+  Greet() string
+}
+
+var g Greeter = Person{Name: "Alice"}</code></pre>
+              <p>Go uses structural typing, so a type satisfies an interface when it has the right methods.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section" id="packages">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">7. Project structure</p>
+            <h3>Packages and Scope</h3>
+            <p>Packages organize code, and exported identifiers are controlled by capitalization.</p>
+          </div>
+
+          <div class="content-grid">
+            <article class="lesson-card">
+              <h4>Packages and imports</h4>
+              <pre><code>package main
+
+import (
+  "fmt"
+  m "math"
+  _ "image/png"
+)</code></pre>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Visibility and init</h4>
+              <pre><code>type PublicStruct struct {}
+type privateStruct struct {}
+
+func PublicFunc() {}
+func privateFunc() {}
+
+func init() {}</code></pre>
+              <p>Capitalized names are exported, lowercase names stay package-private, and <code>init()</code> runs before <code>main()</code>.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section" id="concurrency">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">8. Parallel work</p>
+            <h3>Concurrency</h3>
+            <p>Goroutines, channels, selects, and mutexes are the main primitives for concurrent Go code.</p>
+          </div>
+
+          <div class="content-grid">
+            <article class="lesson-card">
+              <h4>Goroutines and wait groups</h4>
+              <pre><code>go func() {
+  fmt.Println("concurrent!")
+}()
+
+var wg sync.WaitGroup
+for i := 0; i &lt; 5; i++ {
+  wg.Add(1)
+  go func(n int) {
+    defer wg.Done()
+    work(n)
+  }(i)
+}
+wg.Wait()</code></pre>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Channels, select, and mutex</h4>
+              <pre><code>ch := make(chan int)
+bch := make(chan int, 5)
+
+ch &lt;- 42
+v := &lt;-ch
+close(ch)
+
+select {
+case v := &lt;-ch1:
+  fmt.Println(v)
+case &lt;-time.After(time.Second):
+  fmt.Println("timeout")
+default:
+}
+
+var mu sync.Mutex
+mu.Lock()
+sharedCounter++
+mu.Unlock()</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="topic-section" id="errors">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">9. Failure paths</p>
+            <h3>Errors</h3>
+            <p>Error handling stays explicit, and panic plus recover should stay reserved for exceptional cases.</p>
+          </div>
+
+          <div class="content-grid">
+            <article class="lesson-card">
+              <h4>Error handling</h4>
+              <pre><code>val, err := strconv.Atoi("42")
+if err != nil {
+  return fmt.Errorf("parse failed: %w", err)
+}
+
+err1 := errors.New("base error")
+err2 := fmt.Errorf("context: %w", err1)</code></pre>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Custom errors, panic, and recover</h4>
+              <pre><code>type AppError struct {
+  Code int
+  Msg  string
+}
+
+func (e *AppError) Error() string {
+  return fmt.Sprintf("[%d] %s", e.Code, e.Msg)
+}
+
+panic("unrecoverable!")
+
+defer func() {
+  if r := recover(); r != nil {
+    fmt.Println("recovered:", r)
+  }
+}()</code></pre>
+              <p>Use panic and recover only for unexpected failures, not as regular control flow.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        var storageKey = 'go-notes-theme';
+        var root = document.documentElement;
+        var toggle = document.querySelector('[data-theme-toggle]');
+        var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav-link]'));
+        var sections = navLinks
+          .map(function (link) {
+            return document.getElementById(link.getAttribute('data-nav-link'));
+          })
+          .filter(Boolean);
+
+        function applyTheme(theme) {
+          root.setAttribute('data-theme', theme);
+          try {
+            localStorage.setItem(storageKey, theme);
+          } catch (error) {
+          }
+          if (toggle) {
+            toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+            toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+          }
+        }
+
+        function readTheme() {
+          try {
+            return localStorage.getItem(storageKey);
+          } catch (error) {
+            return null;
+          }
+        }
+
+        var saved = readTheme();
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+
+        if (toggle) {
+          toggle.addEventListener('click', function () {
+            var current = root.getAttribute('data-theme') || 'dark';
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+          });
+        }
+
+        if ('IntersectionObserver' in window) {
+          var setActive = function (id) {
+            navLinks.forEach(function (link) {
+              link.classList.toggle('is-active', link.getAttribute('data-nav-link') === id);
+            });
+          };
+
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                setActive(entry.target.id);
+              }
+            });
+          }, {
+            rootMargin: '-40% 0px -45% 0px',
+            threshold: 0.08
+          });
+
+          sections.forEach(function (section) {
+            observer.observe(section);
+          });
+        }
+      }());
+    </script>
+  </body>
+</html>

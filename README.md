@@ -1,21 +1,21 @@
 # Go Notes
 
-This repository now keeps the long-form notes in a GitHub Pages-friendly `docs/` folder, with one markdown page per topic and a landing page for quick navigation.
+The documentation is now a static HTML site in `docs/`, so you can open it locally without a markdown renderer or build step.
 
-Use [docs/index.md](docs/index.md) as the entry point for the published site. The topic pages mirror the cheat-sheet structure from the attached reference and are grouped by concept so they are easy to browse, expand, and maintain.
+Start with [docs/index.html](docs/index.html). The page includes a sticky topic nav, a theme toggle, and the Go notes grouped into a single browsable view.
 
-## Docs Map
+## What Is Included
 
-* [Basics](docs/basics.md)
-* [Arrays & Slices](docs/arrays-and-slices.md)
-* [Maps](docs/maps.md)
-* [Structs](docs/structs.md)
-* [Control Flow](docs/control-flow.md)
-* [Functions](docs/functions.md)
-* [Packages & Scope](docs/packages-and-scope.md)
-* [Concurrency](docs/concurrency.md)
-* [Errors](docs/errors.md)
-* [Hosting GitHub Pages](docs/hosting.md)
+* Basics
+* Arrays and Slices
+* Maps
+* Control Flow
+* Functions
+* Structs
+* Packages and Scope
+* Concurrency
+* Errors
+* Local use tips
 
 ## Why Go?
 
