@@ -15,6 +15,7 @@
         </div>
 
         <nav class="sidebar__nav" aria-label="Documentation navigation">
+          <a class="sidebar__link" href="#why-go" data-nav-link="why-go">Why Go?</a>
           <a class="sidebar__link" href="#basics" data-nav-link="basics">Basics</a>
           <a class="sidebar__link" href="#arrays" data-nav-link="arrays">Arrays and Slices</a>
           <a class="sidebar__link" href="#maps" data-nav-link="maps">Maps</a>
@@ -35,6 +36,40 @@
         <header class="hero" id="top">
           <h2 class="hero__title">Go fundamentals</h2>
         </header>
+
+        <section class="topic-section" id="why-go">
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">Overview</p>
+            <h3>Why Go?</h3>
+            <p>Go was designed for modern systems and offers advantages that make it well-suited for backend and cloud development.</p>
+          </div>
+
+          <div class="content-grid">
+            <article class="lesson-card">
+              <h4>Designed for</h4>
+              <ul>
+                <li>multicore systems</li>
+                <li>cloud infrastructure</li>
+                <li>distributed systems</li>
+                <li>backend/network services</li>
+              </ul>
+            </article>
+
+            <article class="lesson-card">
+              <h4>Key advantages</h4>
+              <ul>
+                <li>built-in concurrency</li>
+                <li>lightweight threading via goroutines</li>
+                <li>fast compile + execution</li>
+                <li>simple syntax</li>
+                <li>statically typed</li>
+                <li>compiled to a single binary</li>
+              </ul>
+              <p>Combines Python-like simplicity with C/C++-like performance.</p>
+            </article>
+          </div>
+
+        </section>
 
         <section class="topic-section" id="basics">
           <div class="section-heading">
@@ -321,6 +356,7 @@ func init() {}</code></pre>
             <p class="section-heading__eyebrow">8. Parallel work</p>
             <h3>Concurrency</h3>
             <p>Goroutines, channels, selects, and mutexes are the main primitives for concurrent Go code.</p>
+            <p>Go uses a green thread - Abstraction of an actual thread, managed by go runtime. It is cheaper and more lightweight. We only interact with these high level go routines. </p>
           </div>
 
           <div class="content-grid">

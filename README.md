@@ -1,9 +1,5 @@
 # Go Notes
 
-The documentation is now a static HTML site in `docs/`, so you can open it locally without a markdown renderer or build step.
-
-Start with [docs/index.html](docs/index.html). The page includes a sticky topic nav, a theme toggle, and the Go notes grouped into a single browsable view.
-
 ## What Is Included
 
 * Basics
@@ -15,7 +11,6 @@ Start with [docs/index.html](docs/index.html). The page includes a sticky topic 
 * Packages and Scope
 * Concurrency
 * Errors
-* Local use tips
 
 ## Why Go?
 
